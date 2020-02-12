@@ -1,0 +1,5 @@
+  // pega a data atual
+   LocalDate dataAtual = LocalDate.now();
+  // // Local Date tem vários métodos legais que fazem cálculos com data, o formato também pode ser variado
+   dataAtual.minusMonths(1).format(DateTimeFormatter.ofPattern("MM/yyyy")));
+
