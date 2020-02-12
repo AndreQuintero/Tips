@@ -1,0 +1,27 @@
+/*com EnumSet vc pode armazenar lista de enums, até mesmo em outro enum*/
+
+public enum Codigos {
+    COD1("COD1", EnumSet.of(EnumQualquer.Propriedade1, EnumQualquer.Propriedade2)),
+    COD2("COD2", EnumSet.of(EnumQualquer.NDA));
+
+    private String value;
+    private EnumSet<CodigosEnums> enumsCodigos;
+
+    private Codigos(String value, EnumSet<CodigosEnums> enumsCodigos) {
+        this.value = value;
+        this.enumsCodigos = enumsCodigos;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+
+    public EnumSet<CodigosEnums> getEnumsCodigos() {
+        return enumsCodigos;
+    }
+
+    public static Collection<Codigos> getCollectionCodigoMotivos () {
+            return Arrays.asList(Codigos.values());
+    }
+}
