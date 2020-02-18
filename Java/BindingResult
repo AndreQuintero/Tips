@@ -1,0 +1,2 @@
+// "instância" um BindingResult
+Errors errors = new BeanPropertyBindingResult(objectToValidate, "objectName");
