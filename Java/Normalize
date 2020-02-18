@@ -1,0 +1,45 @@
+Créditos: Alexandre Miquelin
+
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
+
+public class NormalizeStringUtils {
+
+    private static final String BLANK = "";
+    private static final String P_ASCII = "[^\\p{ASCII}]";
+    private static final String NAO_ACENTUADAS = "aaaaaceeeeuuuuoooiiiAAAAACEEEEUUUUOOOIII";
+    private static final String ACENTUADAS = "áãàâäçéèëêùûüúóôöïîíÁÀÂÄÃÇÉÈËÊÙÛÜÚÓÔÖÏÎÍ";
+
+    /**
+     * Normaliza a string de entrada, removendo acentos, cedilhas, e convertendo-os para seus equivalentes (ç -> c)
+     */
+    public static String normalize(String string) {
+        if (string == null) {
+            return string;
+        }
+        return Normalizer.normalize(string, Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+    }
+
+    /**
+     * Normaliza a string de entrada, para ignorarmos acentuação na consulta.
+     * 
+     * @param param
+     * @return
+     */
+    public static String normalizeForDatabase(String param) {
+
+        return Normalizer.normalize(param, Normalizer.Form.NFD).replaceAll(P_ASCII, BLANK);
+    }
+
+    /**
+     * Transforma o parâmetro aplicando nele o comando TRANSLATE, para ignorarmos acentuação na consulta. Obs.: o comando TRANSLATE é Query Native do Oracle
+     * SQL, correndo o risco de não funcionar em outros Bancos de Dados.
+     * 
+     * @param paramName
+     * @return
+     */
+    public static String translate(String paramName) {
+
+        return "TRANSLATE(" + paramName + ",'" + ACENTUADAS + "','" + NAO_ACENTUADAS + "')";
+    }
+}
